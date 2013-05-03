@@ -1,0 +1,5 @@
+#!/bin/bash
+umask 002
+unison $@
+umask 022
+
