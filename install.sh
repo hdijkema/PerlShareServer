@@ -3,6 +3,12 @@
 # Install on debian systems
 INSTDIR=/usr/share/perlshare
 
+# Install dependend modules
+apt-get -y install liblockfile-simple-perl
+apt-get -y install inotify-tools
+apt-get -y install apache2
+
+
 # Install pershare server
 mkdir -p $INSTDIR
 tar cf - PerlShareServer.pl unison_umask htdocs etc init.d PerlShareCommon | (cd $INSTDIR; tar xf -)
