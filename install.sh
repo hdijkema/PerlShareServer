@@ -4,8 +4,8 @@
 INSTDIR = /usr/share/perlshare
 
 # Install pershare server
-mkdir $INSTDIR
-tar cf - PerlShareServer.pl unison_mask etc init.d PerlShareCommon | (cd /usr/share/perlshare; tar xf -)
+mkdir -p $INSTDIR
+tar cf - PerlShareServer.pl unison_mask etc init.d PerlShareCommon | (cd $INSTDIR; tar xf -)
 chown -R root.root $INSTDIR/
 chmod 755 $INSTDIR/unison_mask
 chmod 755 $INSTDIR/PerlShareServer.pl
