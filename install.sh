@@ -28,15 +28,15 @@ cp $INSTDIR/init.d/perlshare /etc/init.d
 chown root.root /etc/init.d/perlshare
 chmod 755 /etc/init.d/perlshare
 
-for i in 2 3 4 5 
-do
-  ln -s -f /etc/init.d/perlshare /etc/rc$i.d/S70perlshare
-done
+#for i in 2 3 4 5 
+#do
+#  ln -s -f /etc/init.d/perlshare /etc/rc$i.d/S70perlshare
+#done
 
-for i in 1 6
-do
-  ln -s -f /etc/init.d/perlshare /etc/rc$i.d/K10perlshare
-done
+#for i in 1 6
+#do
+#  ln -s -f /etc/init.d/perlshare /etc/rc$i.d/K10perlshare
+#done
 
 update-rc.d perlshare defaults
 

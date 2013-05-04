@@ -1,7 +1,14 @@
 #!/bin/bash
-# INIT script to start / stop PerlShareServer
-# Prerequisite for PerlShareServer to work is that apache2 is configured right
-# and that it is stared.
+### BEGIN INIT INFO
+# Provides:        perlshare
+# Required-Start:  $network $remote_fs $syslog
+# Required-Stop:   $network $remote_fs $syslog
+# Default-Start:   2 3 4 5
+# Default-Stop:    1
+# Short-Description: Start PerlShareServer
+### END INIT INFO
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 test -f /lib/lsb/init-functions || exit 1
 . /lib/lsb/init-functions
@@ -11,7 +18,7 @@ test -d /etc/perlshare || exit 0
 case "$1" in
   start)
     log_begin_msg "Starting PerlShareServer"
-    /usr/bin/PerlShareServer.pl >/var/log/perlshare.log 2>&1 &
+    perl /usr/share/perlshare/PerlShareServer.pl >/var/log/perlshare.log 2>&1 &
     log_end_msg 0
     ;;
   stop)
@@ -23,5 +30,4 @@ case "$1" in
   *)
   ;;
 esac
-        
 
