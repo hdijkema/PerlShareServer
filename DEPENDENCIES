@@ -2,4 +2,5 @@ Debian packages:
 
  liblockfile-simple-perl
  inotify-tools
+ apache2
 
