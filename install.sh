@@ -5,6 +5,7 @@ INSTDIR=/usr/share/perlshare
 
 # Install dependend modules
 apt-get -y install liblockfile-simple-perl
+apt-get -y install libexpect-perl
 apt-get -y install inotify-tools
 apt-get -y install apache2
 
