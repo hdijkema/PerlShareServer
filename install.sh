@@ -19,7 +19,7 @@ mkdir -p /etc/perlshare
 cp $INSTDIR/etc/perlshare/* /etc/perlshare
 chown -R root.root /etc/perlshare
 chmod 644 /etc/perlshare/*
-(cd /etc/apach2/conf.d/; ln -s -f /etc/perlshare/perlshare_apache.conf .)
+(cd /etc/apache2/conf.d/; ln -s -f /etc/perlshare/perlshare_apache.conf .)
 /etc/init.d/apache2 restart
 
 # Install init.d daemon starter
