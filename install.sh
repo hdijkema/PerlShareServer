@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install on debian systems
-INSTDIR = /usr/share/perlshare
+INSTDIR=/usr/share/perlshare
 
 # Install pershare server
 mkdir -p $INSTDIR
