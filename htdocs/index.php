@@ -6,7 +6,10 @@
 <body>
 <?php
   include "auth.php";
-  echo "<p>HI!</p>";
+  if (logged_in()) {
+  } else {
+    login();
+  }
 ?>
 </body>
 </html>

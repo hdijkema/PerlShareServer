@@ -1,5 +1,5 @@
-# auth.php
 <?php
+# auth.php
 
 function logged_in() {
   return $_SESSION['logged_in'] == 1;
@@ -13,10 +13,7 @@ function usertype() {
   return $_SESSION['usertype'];
 }
 
-if (logged_in()) {
-  # do nothing
-} else {
-
+function login() {
   $logged_in = 0;
   if ($_POST[email] != "") {
     $email = trim($_POST[email]);
@@ -38,7 +35,9 @@ if (logged_in()) {
 
   if ($logged_in == 0) {
     ?>
-    <form class="login" action="index.php" method="post">
+    <div class="login">
+    <img src="perlshare_logo.png" />
+    <form action="index.php" method="post">
       <table><tr>
       <td>eMail:</td><td><input type="text" name="email" /></td>
       </tr><tr>
@@ -48,6 +47,7 @@ if (logged_in()) {
       </tr>
       </table>
     </form>
+    </div>
     <?php
   }
 }
