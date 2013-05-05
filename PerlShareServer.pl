@@ -99,6 +99,8 @@ sub create_user($$) {
   open $fout, ">>$homedir/.profile";
   print $fout "umask 002\n";
   close $fout;
+  
+  chmod(0755, $homedir);
 
   my $exp = Expect->new();
   $exp->raw_pty(1);
