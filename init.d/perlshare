@@ -18,7 +18,7 @@ test -d /etc/perlshare || exit 0
 case "$1" in
   start)
     log_begin_msg "Starting PerlShareServer"
-    perl -I /usr/share/perlshare /usr/share/perlshare/PerlShareServer.pl >/var/log/perlshare.log 2>&1 &
+    perl -I /usr/share/perlshare /usr/share/perlshare/PerlShareServer.pl /etc/perlshare/config.ini >/var/log/perlshare.log 2>&1 &
     log_end_msg 0
     ;;
   stop)

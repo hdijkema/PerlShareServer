@@ -8,7 +8,7 @@ apt-get -y install liblockfile-simple-perl
 apt-get -y install libexpect-perl
 apt-get -y install inotify-tools
 apt-get -y install apache2
-
+apt-get -y install php5-auth-pam
 
 # Install pershare server
 mkdir -p $INSTDIR

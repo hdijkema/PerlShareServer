@@ -3,4 +3,9 @@ Debian packages:
  liblockfile-simple-perl
  inotify-tools
  apache2
+ php5-auth-pam
+ libexpect-perl
+ 
+ 
+ 
 
