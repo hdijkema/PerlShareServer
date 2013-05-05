@@ -5,7 +5,7 @@
 <body>
 <?php
   echo "<p>HI!</p>";
-  var_dump (pam_auth('hans@oesterholt.net','rotop2',&$error,0));
+  var_dump (pam_auth('iconnect', 'iconnect' ,&$error,0));
   print $error;
 ?>
 </body>

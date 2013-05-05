@@ -4,11 +4,11 @@
 INSTDIR=/usr/share/perlshare
 
 # Install dependend modules
-apt-get -y install liblockfile-simple-perl
-apt-get -y install libexpect-perl
-apt-get -y install inotify-tools
-apt-get -y install apache2
-apt-get -y install php5-auth-pam
+apt-get -y install liblockfile-simple-perl libexpect-perl \
+                    inotify-tools apache2 php5-auth-pam
+
+# configure php5-auth-pam
+usermod -a -G shadow www-data
 
 # Install pershare server
 mkdir -p $INSTDIR
@@ -16,8 +16,10 @@ tar cf - PerlShareServer.pl unison_umask htdocs etc init.d PerlShareCommon | (cd
 chown -R root.root $INSTDIR/
 chmod 755 $INSTDIR/unison_umask
 chmod 755 $INSTDIR/PerlShareServer.pl
+rm -f /var/www/perlshare
 ln -s -f $INSTDIR/htdocs /var/www/perlshare
 chmod 644 $INSTDIR/htdocs/*
+chmod 755 $INSTDIR/htdocs
 
 # Install proxy configuration 
 a2enmod proxy
