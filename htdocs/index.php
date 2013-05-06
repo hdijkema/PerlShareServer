@@ -6,8 +6,8 @@
 <body>
 <?php
   include "auth.php";
-  include "useradmin.php"
-  include "userfunctions.php"
+  #include "useradmin.php"
+  #include "userfunctions.php"
   if (logged_in()) {
     
   } else {
