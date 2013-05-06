@@ -10,6 +10,16 @@ apt-get -y install liblockfile-simple-perl libexpect-perl \
 # configure php5-auth-pam
 usermod -a -G shadow www-data
 
+# create user perlshare
+groupadd -f perlshare
+useradd -d /home/perlshare/perlshare -m -s '/bin/bash' perlshare
+PASSWD=""
+while [ "$PASSWD" = "" ] ; do
+  echo -n "Give password for perlshare admin user ('perlshare')>"
+  PASSWD=`read`
+done
+echo "perlshare:$PASSWD" | chpasswd 
+
 # Install pershare server
 mkdir -p $INSTDIR
 tar cf - PerlShareServer.pl unison_umask htdocs etc init.d PerlShareCommon | (cd $INSTDIR; tar xf -)

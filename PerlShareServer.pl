@@ -84,7 +84,7 @@ sub create_user($$) {
   
   my $homedir = $storage_location."/".$email;
   
-  open my $fin, "useradd -d '$homedir' -g 'users' -m -s '/bin/bash' -p '$pass' -K UMASK=002 $email 2>&1 |";
+  open my $fin, "useradd -d '$homedir' -g 'perlshare' -m -s '/bin/bash' -K UMASK=007 $email 2>&1 |";
   while (my $line = <$fin>) {
     $line=~s/^\s*//;
     $line=~s/\s*$//;
@@ -97,7 +97,7 @@ sub create_user($$) {
   close($fout);
   
   open $fout, ">>$homedir/.profile";
-  print $fout "umask 002\n";
+  print $fout "umask 007\n";
   close $fout;
   
   my $exp = Expect->new();
