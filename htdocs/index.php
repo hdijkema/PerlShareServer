@@ -9,21 +9,25 @@
 </head>
 <body>
 <?php
-  include "util.php";
-  include "auth.php";
-  include "admin_functions.php";
-  include "user_functions.php";
-  
-  if (logged_in()) {
-    if (usertype() == "user") {
-      user_main();
-    } else if (usertype() == "admin") {
-      admin_main();
-    } else {
-      # nothing
-    }
+  if (!isset($_SERVER['HTTPS'])) {
+    header('Location: https://'.$_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI]);
   } else {
-    login();
+    include "util.php";
+    include "auth.php";
+    include "admin_functions.php";
+    include "user_functions.php";
+    
+    if (logged_in()) {
+      if (usertype() == "user") {
+        user_main();
+      } else if (usertype() == "admin") {
+        admin_main();
+      } else {
+        # nothing
+      }
+    } else {
+      login();
+    }
   }
 ?>
 </body>
