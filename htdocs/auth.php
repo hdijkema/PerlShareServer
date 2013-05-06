@@ -2,7 +2,11 @@
 # auth.php
 
 function logged_in() {
-  return $_SESSION['logged_in'] == 1;
+  if (isset($_SESSION['logged_in'])) {
+    return $_SESSION['logged_in'] == 1;
+  } else {
+    return 0;
+  }
 }
 
 function account() {
@@ -13,11 +17,18 @@ function usertype() {
   return $_SESSION['usertype'];
 }
 
+function logout() {
+  $_SESSION['logged_in'] = 0;
+   header ("Location: index.php");
+}
+
 function login() {
   $logged_in = 0;
-  if ($_POST[email] != "") {
-    $email = trim($_POST[email]);
-    $passwd = trim($_POST[passwd]);
+  $auth_error = 0;
+  
+  if (isset($_POST['email'])) {
+    $email = trim($_POST['email']);
+    $passwd = trim($_POST['passwd']);
     
     # Users need to have a home directory in /home/perlshare
     $user_ok = 0;
@@ -49,29 +60,39 @@ function login() {
         $logged_in = 1;
       }
     } else {
-      ?>
-      <div class="error">
-      <p>Authorization for '<?php echo $email; ?>' failed</p>
-      <?php
+      $auth_error = 1;
     }
   } 
 
   if ($logged_in == 0) {
     ?>
     <div class="login">
-    <img src="perlshare_logo.png" />
-    <form action="index.php" method="post">
-      <table><tr>
-      <td>eMail:</td><td><input type="text" name="email" /></td>
-      </tr><tr>
-      <td>Password:</td><td><input type="password" name="passwd" /></td>
-      </tr><tr>
-      <td></td><td><input type="submit" value="login" /></td>
-      </tr>
-      </table>
-    </form>
+      <form action="index.php" method="post">
+        <table><tr>
+        <td colspan="2"><img src="perlshare-login.png" />
+        <?php
+          if ($auth_error) {
+            ?>
+            <p class="error">
+              Authorization for '<?php echo $email; ?>' failed
+            </p>
+            <?php
+          }
+        ?>
+        </td>
+        </tr><tr>
+        <td>eMail:</td><td><input type="text" name="email" /></td>
+        </tr><tr>
+        <td>Password:</td><td><input type="password" name="passwd" /></td>
+        </tr><tr>
+        <td colspan="2"><button type="submit" value="login" >Login</button></td>
+        </tr>
+        </table>
+      </form>
     </div>
     <?php
+  } else {
+    header ("Location: index.php");
   }
 }
 
