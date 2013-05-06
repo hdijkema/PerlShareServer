@@ -30,7 +30,7 @@ function login() {
       $homedir = $parts[5];
       if ($user == $email) {
         $go_on = 0;
-        if (preg_match("^[/]home[/]perlshare", $homedir)) {
+        if (preg_match("%^[/]home[/]perlshare%", $homedir)) {
           $user_ok = 1;
         }
       }
