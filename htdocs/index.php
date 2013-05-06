@@ -9,7 +9,7 @@
 </head>
 <body>
 <?php
-  include "util.php"
+  include "util.php";
   include "auth.php";
   include "admin_functions.php";
   include "user_functions.php";

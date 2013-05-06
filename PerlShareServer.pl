@@ -19,6 +19,12 @@ my $log_location = $config{locations}{logs} or die "You need to provide a log lo
 my $log_file = "$log_location/perlshare.log"; 
 
 mkdir($command_location), if (! -d $command_location);
+{
+  chmod 0770, $command_location;
+  my ($login,$pass,$uid,$gid) = getpwnam("www-data");
+  my ($rlogin,$rpass,$ruid,$rgid) = getpwnam("root");
+  chown $ruid, $gid, $command_location;
+}
 mkdir($storage_location), if (! -d $storage_location);
 mkdir($log_location), if (! -d $log_location);
 
@@ -135,7 +141,8 @@ sub share_dir($$) {
   my $src_dir = "$homedir_source/$dir";
   my $dest_dir = "$homedir_dest/$dir";
   
-  open my $fin, "ln -s '$src_dir' '$dest_dir' |";
+  unlink($dest_dir);
+  open my $fin, "ln -f -s '$src_dir' '$dest_dir' |";
   while (my $line = <$fin>) {
     $line=~s/^\s*//;
     $line=~s/\s*$//;
@@ -151,6 +158,27 @@ sub share_dir($$) {
   }
   close($fin);
   
+  open my $fin, "<$src_dir/.shared_with";
+  my @sharees;
+  while (my $line = <$fin>) {
+    $line=~s/^\s*//;
+    $line=~s/\s*$//;
+    push @sharees, $line;
+  }
+  close($fin);
+  my $make = 1;
+  foreach my $email (@sharees) {
+    if ($email eq $email_dest) {
+      $make = 0;
+      last;
+    }
+  }
+  if ($make) {
+    open my $fout, ">>$src_dir/.shared_with";
+    print $fout "$email_dest\n";
+    close($fout);
+  }
+  
 }
 
 sub unshare_dir($$) {
@@ -162,6 +190,21 @@ sub unshare_dir($$) {
   
   my $src_dir = "$homedir_source/$dir";
   my $dest_dir = "$homedir_dest/$dir";
+  
+  open my $fin, "<$src_dir/.shared_with";
+  my @sharees;
+  while (my $line = <$fin>) {
+    $line=~s/^\s*//;
+    $line=~s/\s*$//;
+    if ($line eq "$email_dest") { next; }
+    push @sharees, $line;
+  }
+  close($fin);
+  open my $fout, ">$src_dir/.shared_with";
+  foreach my $email (@sharees) {
+    print $fout "$email\n";
+  }
+  close($fout);
   
   unlink($dest_dir);
 }

@@ -1,6 +1,5 @@
 
 body {
-  
 }
 
 .login {
@@ -51,10 +50,136 @@ p.error {
 
 .menu {
   float: left;
+  width: 200px;
+  display: block;
+  margin-right: 1em;
+  padding-right: 1em;
+  border-right: 1px solid #808080;
+  height: 800px;
+}
+
+.menu table img {
+  width: 200px;
+}
+
+.shares {
+  display: block;
+  color: #808080; 
+	font: 14px/100% Arial, Helvetica, sans-serif;
+}
+
+.shares h1, h1.admin {
+	font: 16px/120% Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #606060;
+}
+
+.shares h3 {
+	font: 14px/120% Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+.shares tr.shareinfo {
+  padding: 0;
+  margin: 0;
+  background: #808080;
+  color: white;
+}
+
+.shares tr.shareinfo td {
+  padding-bottom: 1em;
+}
+
+.shares li {
+  padding: 0.1em;
+}
+
+.shares button, .shares p.kind {
+	display: block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	color: #808080;
+	border: solid 1px #f0f0f0;
+	background: #e0e0e0;
+	width: 100%;
+}
+
+.shares button {
+  padding: .3em 3em .3em;
+}
+
+.shares button:hover {
+  background: #d0d0d0;
+}
+
+.shares p.kind {
+  padding-top: .4em;
+  padding-left: .5em;
+  padding-bottom: .4em;
+  padding-right: .5em;
+}
+
+.shares p.kind:hover {
+  background: #d0d0d0;
+}
+
+.shares table {
+  width: 700px;
+  border-collapse:collapse;
+}
+
+.shares tr.gray {
+  background: #f8f8f8;
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+}
+
+.shares tr.white {
+  background: #ffffff;
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+;}
+
+.shares th {
+	color: #f0f0f0;
+	background: #f78d1d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+	background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+	padding: 1em;
+}
+
+.shares td {
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.shares .name {
+  width: 90%;
+  font-weight: bold;
+}
+
+.shares .holder {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .login button, .menu button {
-	display: inline-block;
+	display: block;
 	outline: none;
 	cursor: pointer;
 	text-align: center;
@@ -101,4 +226,6 @@ p.error {
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
 
 }  
+
+
 
