@@ -18,7 +18,19 @@ function user_display_menu() {
   <?php
 }
 
-function user_display_shares() {
+function user_display_shares($email) {
+  ?>
+  <div class="shares">
+    <table>
+  <?php
+    $shares = get_shares($email);
+    foreach ($shares as $share) {
+      ?>
+      <tr><td><?php print "$share";?></td><td>info</td><td>share</td></tr>
+      <?php
+    }
+  ?>
+  <?php
 }
 
 function user_change_password() {
@@ -34,8 +46,10 @@ function user_main() {
   var_dump($_POST);
   $cmd = isset($_POST['command']) ? $_POST['command'] : 'display-shares';
   
+  $email = $_SESSION['email'];
+  
   if ($cmd == "display-shares") {
-    user_display_shares();
+    user_display_shares($email);
   } else if ($cmd == "change-password") {
     user_change_password();
   } else if ($cmd == "logout") {
