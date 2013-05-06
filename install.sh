@@ -2,6 +2,7 @@
 
 # Install on debian systems
 INSTDIR=/usr/share/perlshare
+SKIP_APACHE=1
 
 # Install dependend modules
 apt-get -y install liblockfile-simple-perl libexpect-perl \
@@ -12,7 +13,7 @@ usermod -a -G shadow www-data
 
 # create user perlshare
 groupadd -f perlshare
-useradd -d /home/perlshare/perlshare -m -s '/bin/bash' perlshare
+useradd -d /home/perlshare/perlshare -g perlshare -m -s '/bin/bash' perlshare
 PASSWD=""
 while [ "$PASSWD" = "" ] ; do
   read -p "Give password for perlshare admin user ('perlshare')>" PASSWD
@@ -30,15 +31,17 @@ ln -s -f $INSTDIR/htdocs /var/www/perlshare
 chmod 644 $INSTDIR/htdocs/*
 chmod 755 $INSTDIR/htdocs
 
-# Install proxy configuration 
-a2enmod proxy
-a2enmod proxy_connect
-mkdir -p /etc/perlshare
-cp $INSTDIR/etc/perlshare/* /etc/perlshare
-chown -R root.root /etc/perlshare
-chmod 644 /etc/perlshare/*
-(cd /etc/apache2/conf.d/; ln -s -f /etc/perlshare/perlshare_apache.conf .)
-/etc/init.d/apache2 restart
+if [ $SKIP_APACHE = 0 ]; then
+  # Install proxy configuration 
+  a2enmod proxy
+  a2enmod proxy_connect
+  mkdir -p /etc/perlshare
+  cp $INSTDIR/etc/perlshare/* /etc/perlshare
+  chown -R root.root /etc/perlshare
+  chmod 644 /etc/perlshare/*
+  (cd /etc/apache2/conf.d/; ln -s -f /etc/perlshare/perlshare_apache.conf .)
+  /etc/init.d/apache2 restart
+fi
 
 # Install init.d daemon starter
 cp $INSTDIR/init.d/perlshare /etc/init.d
