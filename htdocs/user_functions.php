@@ -7,6 +7,8 @@ function user_display_menu() {
     <form action="index.php" method="post">
       <table>
       <tr>
+        <td><img src="perlshare-login.png" /></td>
+      </tr><tr>
         <td><button type="submit" value="change-password" name="command" >Change Password</input></td>
       </tr><tr>
         <td><button type="submit" value="logout" name="command" >Logout</button></td>
