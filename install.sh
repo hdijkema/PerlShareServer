@@ -15,8 +15,7 @@ groupadd -f perlshare
 useradd -d /home/perlshare/perlshare -m -s '/bin/bash' perlshare
 PASSWD=""
 while [ "$PASSWD" = "" ] ; do
-  echo -n "Give password for perlshare admin user ('perlshare')>"
-  PASSWD=`read`
+  read -p "Give password for perlshare admin user ('perlshare')>" PASSWD
 done
 echo "perlshare:$PASSWD" | chpasswd 
 
