@@ -22,6 +22,37 @@ function logout() {
    header ("Location: index.php");
 }
 
+function try_login_normal_user($user, $pass) {
+  if ($user == "perlshare") {
+    # Don't allow admin access
+    return false;
+  }
+  
+  $user_ok = 0;
+  $fh = fopen("/etc/passwd","r");
+  $go_on = 1;
+  while ($go_on && $line = fgets($fh)) {
+    $line = trim($line);
+    $parts = preg_split("/:/", $line);
+    $user = $parts[0];
+    $homedir = $parts[5];
+    if ($user == $email) {
+      $go_on = 0;
+      if (preg_match("%^[/]home[/]perlshare%", $homedir)) {
+        $user_ok = 1;
+      }
+    }
+  }
+  fclose($fh);
+  
+  if ($user_ok) {
+    if (pam_auth($email, $passwd, &$error)) {
+      return true;
+    } 
+  }
+  return false;
+}
+
 function login() {
   $logged_in = 0;
   $auth_error = 0;
