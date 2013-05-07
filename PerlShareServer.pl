@@ -224,6 +224,10 @@ sub push_key($$$) {
     $key .= $line;
   }
   close($fin);
+  log_info("email  : $email");
+  log_info("key    : $key");
+  log_info("homedir: $homedir");
+  log_info("keyfile: $command_location/$cmd");
   
   my ($login,$pass,$uid,$gid) = getpwnam($email);
   if (not(-d "$homedir/.ssh")) {
