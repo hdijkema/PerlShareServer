@@ -76,6 +76,8 @@ sub handle_commands($$) {
       share_dir($storage_location, $cmd);
     } elsif ($cmd=~/^unshare/) {
       unshare_dir($storage_location, $cmd);
+    } elsif ($cmd=~/^public_key/) {
+      push_key($storage_location, $command_location, $cmd);
     } else {
       log_error("Unknown command '$cmd'");
     }
@@ -207,6 +209,34 @@ sub unshare_dir($$) {
   close($fout);
   
   unlink($dest_dir);
+}
+
+sub push_key($$) {
+  my $storage_location = shift;
+  my $command_location = shift;
+  my $cmd = shift;
+  my ($c, $email, $share) = split(/\s+/, $cmd);
+  my $homedir = $storage_location."/".$email;
+  my $key = "";
+  
+  open my $fin, "<$command_location/$cmd";
+  while (my $line = <$fin>) {
+    $key .= $line;
+  }
+  close($fin);
+  
+  my ($login,$pass,$uid,$gid) = getpwnam($email);
+  if (not(-d "$homedir/.ssh")) {
+    mkdir("$homedir/.ssh");
+    chmod(0700, "$homedir/.ssh");
+    chown $uid, $gid, "$homedir/.ssh";
+  }
+  
+  open my $fout, ">>$homedir/.ssh/authorized_keys2";
+  print $fout $key;
+  close($fout);
+  chmod(0644, "$homedir/.ssh/authorized_keys2");
+  chown $uid, $gid, "$homedir/.ssh/authorized_keys2";
 }
 
 ###########################################################################################
