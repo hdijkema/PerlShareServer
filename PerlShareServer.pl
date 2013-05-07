@@ -211,7 +211,7 @@ sub unshare_dir($$) {
   unlink($dest_dir);
 }
 
-sub push_key($$) {
+sub push_key($$$) {
   my $storage_location = shift;
   my $command_location = shift;
   my $cmd = shift;
