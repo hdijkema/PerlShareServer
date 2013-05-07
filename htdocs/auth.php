@@ -22,8 +22,8 @@ function logout() {
    header ("Location: index.php");
 }
 
-function try_login_normal_user($user, $pass) {
-  if ($user == "perlshare") {
+function try_login_normal_user($email, $passwd) {
+  if ($email == "perlshare") {
     # Don't allow admin access
     return false;
   }
