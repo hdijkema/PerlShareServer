@@ -62,6 +62,18 @@ sub handle_commands($$) {
   my $go_on = 1;
   my @files = glob("$command_location/*");
   foreach my $cmd (@files) {
+    
+    my $contents = "";
+    if (-z $cmd) {
+      # do nothing
+    } else {
+      open my $fh, "<$cmd";
+      while (my $line = <$fh>) {
+        $contents .= $line;
+      }
+      close($fh);
+    }
+    
     unlink($cmd);
     $cmd=~s/^$command_location//;
     $cmd=~s/^\///;
@@ -77,7 +89,7 @@ sub handle_commands($$) {
     } elsif ($cmd=~/^unshare/) {
       unshare_dir($storage_location, $cmd);
     } elsif ($cmd=~/^public_key/) {
-      push_key($storage_location, $command_location, $cmd);
+      push_key($storage_location, $command_location, $cmd, $contents);
     } else {
       log_error("Unknown command '$cmd'");
     }
@@ -211,19 +223,14 @@ sub unshare_dir($$) {
   unlink($dest_dir);
 }
 
-sub push_key($$$) {
+sub push_key($$$$) {
   my $storage_location = shift;
   my $command_location = shift;
   my $cmd = shift;
+  my $key = shift;
   my ($c, $email, $share) = split(/\s+/, $cmd);
   my $homedir = $storage_location."/".$email;
-  my $key = "";
   
-  open my $fin, "<$command_location/$cmd";
-  while (my $line = <$fin>) {
-    $key .= $line;
-  }
-  close($fin);
   log_info("email  : $email");
   log_info("key    : $key");
   log_info("homedir: $homedir");
