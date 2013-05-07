@@ -9,7 +9,7 @@ $key   = $_POST['key'];
 
 if (try_login_normal_user($user, $pass)) {
 
-  $file = get_cmd_dir()."/public_key $email $share";
+  $file = get_cmd_dir()."/public_key $user $share";
   $fh = fopen($file, "w");
   fputs($fh, $key);
   fclose($fh);
