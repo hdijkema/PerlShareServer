@@ -1,5 +1,5 @@
 <?php
-include "auth";
+include "auth.php";
 
 $share = $_POST['share'];
 $user  = $_POST['user'];
