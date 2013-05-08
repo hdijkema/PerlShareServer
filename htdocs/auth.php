@@ -8,7 +8,7 @@ function logged_in() {
       if ($email != account()) {
         return false;
       } else {
-        return true;
+        return $_SESSION['logged_in'] == 1;
       }
     } else {
       return $_SESSION['logged_in'] == 1;
