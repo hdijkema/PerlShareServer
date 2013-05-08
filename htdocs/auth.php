@@ -3,9 +3,18 @@
 
 function logged_in() {
   if (isset($_SESSION['logged_in'])) {
-    return $_SESSION['logged_in'] == 1;
+    if (isset($_GET['login'])) {
+      $email = $_GET['login'];
+      if ($email != account()) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return $_SESSION['logged_in'] == 1;
+    }
   } else {
-    return 0;
+    return false;
   }
 }
 
@@ -96,6 +105,10 @@ function login() {
   } 
 
   if ($logged_in == 0) {
+    $email_account = "";
+    if (isset($_GET['login'])) {
+      $email_account = "value=\"".$_GET['login']."\"";
+    }
     ?>
     <div class="login">
       <form action="index.php" method="post">
@@ -112,7 +125,7 @@ function login() {
         ?>
         </td>
         </tr><tr>
-        <td>eMail:</td><td><input type="text" name="email" /></td>
+        <td>eMail:</td><td><input type="text" name="email" <?php print $email_account; ?> /></td>
         </tr><tr>
         <td>Password:</td><td><input type="password" name="passwd" /></td>
         </tr><tr>
