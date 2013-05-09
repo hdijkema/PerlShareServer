@@ -25,7 +25,7 @@ function user_display_shares($email) {
     <h1><?php print "$email"; ?></h1> 
     <form action="index.php" method="post">
     <table>
-    <tr><th>Sharename</th><th>Kind</th><th>Share</th></tr>
+    <tr><th>Sharename</th><th>Kind</th><th>Share</th><th>Drop</th></tr>
     <?php
       $shares = get_shares($email);
       $count = 0;
@@ -58,9 +58,13 @@ function user_display_shares($email) {
             }
             ?>
             </td>
+            <td class="drop">
+              <button type="submit" value=<?php print "\"drop:$share\""; ?> name="command">
+              </button>
+            </td>
           </tr>
           <tr class="shareinfo" id="<?php print "$share"; ?>" style="display:none;">
-          <td colspan="3">
+          <td colspan="4">
             <h3>Shared with:</h3>
             <ul>
             <?php 
