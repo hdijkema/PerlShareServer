@@ -60,6 +60,7 @@ function user_display_shares($email) {
             </td>
             <td class="drop">
               <button type="submit" value=<?php print "\"drop:$share\""; ?> name="command">
+                Drop
               </button>
             </td>
           </tr>
