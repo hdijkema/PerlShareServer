@@ -237,6 +237,7 @@ sub push_key($$$$) {
   log_info("email  : $email");
   log_info("key    : $key");
   log_info("homedir: $homedir");
+  log_info("share  : $share");
   log_info("keyfile: $command_location/$cmd");
   
   my ($login,$pass,$uid,$gid) = getpwnam($email);
@@ -251,6 +252,19 @@ sub push_key($$$$) {
   close($fout);
   chmod(0644, "$homedir/.ssh/authorized_keys2");
   chown $uid, $gid, "$homedir/.ssh/authorized_keys2";
+
+  # create .count stuff
+  my $sharedir = "$homedir/$share";
+  if (not(-d $sharedir)) {
+    mkdir($sharedir);
+    chmod(0775, $sharedir);
+    chown $uid, $gid, $sharedir;
+  }
+  if (not(-r "$sharedir/.count")) {
+    open my $fh, ">$sharedir/.count";
+    print $fh "-10\n";
+    close($fh);
+  }
 }
 
 ###########################################################################################
