@@ -48,6 +48,9 @@ while ( $go_on ) {
   }
 }
 
+log_info("Killing watcher");
+$watcher->kill_watcher();
+
 log_info("Ending program");
 
 exit 0;
