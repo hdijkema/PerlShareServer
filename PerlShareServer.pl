@@ -48,7 +48,6 @@ while ( $go_on ) {
   }
 }
 
-delete $watcher;
 log_info("Ending program");
 
 exit 0;
