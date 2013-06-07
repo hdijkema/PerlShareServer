@@ -5,6 +5,7 @@ Debian packages:
  apache2
  php5-auth-pam
  libexpect-perl
+ rsnapshot
  
  
  
