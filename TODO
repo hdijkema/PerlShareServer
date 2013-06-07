@@ -1,0 +1,9 @@
+controling rsnapshot from perlshare server
+
+- On share creation: create one snapshot configuration per share. 
+- Shares that have been shared from other users won't be backed up.
+- But a link will be created from the other users snapshot to the users snapshot directory
+
+- Running hourly and dayly and monthly snapshots for each user per share, every hour is
+  controled from the perlshare server
+
