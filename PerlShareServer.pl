@@ -77,11 +77,23 @@ sub handle_commands($$) {
       close($fh);
     }
     
-    unlink($cmd);
+    my $cmd_file = $cmd;
+    
     $cmd=~s/^$command_location//;
     $cmd=~s/^\///;
     log_info("handling '$cmd'");
-    if ($cmd=~/^quit$/) {
+    
+    if ($cmd=~/^result/) {
+      # do nothing
+      log_info("Doing nothing: $cmd_file");
+    } else {
+      log_info("unlinking cmd file: $cmd_file");
+      unlink($cmd_file);
+    }
+    
+    if ($cmd=~/^result/) {
+      log_info("result file found '$cmd'");
+    } elsif ($cmd=~/^quit$/) {
       return 0;
     } elsif ($cmd=~/^create/) {
       create_user($storage_location, $cmd);
@@ -93,11 +105,33 @@ sub handle_commands($$) {
       unshare_dir($storage_location, $cmd);
     } elsif ($cmd=~/^public_key/) {
       push_key($storage_location, $command_location, $cmd, $contents);
+    } elsif ($cmd=~/^exists/) {
+      if (exists_user($storage_location, $cmd)) {
+        open my $fh, ">$command_location/result exists ok";
+        close $fh;
+      } else {
+        open my $fh, ">$command_location/result exists nok";
+        close $fh;
+      }
     } else {
       log_error("Unknown command '$cmd'");
     }
   }
   return 1;
+}
+
+sub exists_user($$) {
+  my $storage_location = shift;
+  my $cmd = shift;
+  my ($c, $email) = split(/\s+/,$cmd);
+  
+  my $homedir = $storage_location."/".$email;
+  my $sshdir = $homedir."/.ssh";
+  if (-d $sshdir) {
+    return 1;
+  } else {
+    return 0;
+  }
 }
 
 sub create_user($$) {

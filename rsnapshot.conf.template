@@ -126,6 +126,8 @@ lockfile	:::PERLSHARE_USER_DIR:::/rsnapshot.pid
 #
 #rsync_short_args	-a
 #rsync_long_args	--delete --numeric-ids --relative --delete-excluded
+# We don't want the '--relative' flag for perlshare backups
+rsync_long_args	--delete --numeric-ids --delete-excluded
 
 # ssh has no args passed by default, but you can specify some here.
 #
@@ -193,27 +195,5 @@ exclude	:::PERLSHARE_USER_DIR:::/.snapshots
 ###############################
 
 # LOCALHOST
-backup :::PERLSHARE_USER_DIR:::/:::SHARE:::/	localhost/
-#backup	/home/		localhost/
-#backup	/etc/		localhost/
-#backup	/usr/local/	localhost/
-#backup	/var/log/rsnapshot		localhost/
-#backup	/etc/passwd	localhost/
-#backup	/home/foo/My Documents/		localhost/
-#backup	/foo/bar/	localhost/	one_fs=1, rsync_short_args=-urltvpog
-#backup_script	/usr/local/bin/backup_pgsql.sh	localhost/postgres/
-
-# EXAMPLE.COM
-#backup_script	/bin/date "+ backup of example.com started at %c"	unused1
-#backup	root@example.com:/home/	example.com/	+rsync_long_args=--bwlimit=16,exclude=core
-#backup	root@example.com:/etc/	example.com/	exclude=mtab,exclude=core
-#backup_script	ssh root@example.com "mysqldump -A > /var/db/dump/mysql.sql"	unused2
-#backup	root@example.com:/var/db/dump/	example.com/
-#backup_script	/bin/date	"+ backup of example.com ended at %c"	unused9
-
-# CVS.SOURCEFORGE.NET
-#backup_script	/usr/local/bin/backup_rsnapshot_cvsroot.sh	rsnapshot.cvs.sourceforge.net/
-
-# RSYNC.SAMBA.ORG
-#backup	rsync://rsync.samba.org/rsyncftp/	rsync.samba.org/rsyncftp/
+backup :::PERLSHARE_USER_DIR:::/:::SHARE:::/	:::SHARE:::/
 

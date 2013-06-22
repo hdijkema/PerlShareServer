@@ -34,7 +34,7 @@ function admin_display_users() {
       $users = get_users();
       foreach ($users as $user) {
         ?>
-        <tr class="<?php print "$cl";?>">
+        <tr> 
         <td class="name"><?php print "$user"?></td>
         <td class="action">
           <button type="submit" value="delete:<?php print "$user";?>" name="command">delete</button>
@@ -54,7 +54,50 @@ function admin_change_password() {
 }
 
 function admin_add_user() {
-  
+  error_log("he");
+  if (isset($_POST['create_user']) && $_POST['create_user'] == "1") {
+    $email = $_POST['account'];
+    $password = $_POST['password'];
+    error_log("email = $email");
+    if (exists_user($email)) {
+      error_log("exists email = $email");
+      ?>
+      <div class="shares">
+        <p>User <b>
+        <?php echo "$email"; ?>
+        </b> already exists.</p>
+      </div>
+      <?php
+    } else {
+      error_log("create email = $email");
+      create_user($_POST['account'], $_POST['password']);
+      ?>
+      <div class="shares">
+        <p>User <b>
+        <?php echo "$email"; ?>
+        </b> created.</p>
+      </div>
+      <?php
+    }
+  } else {
+    ?>
+    <div class="shares">
+      <form action="index.php" method="post">
+        <table style="width:400px;">
+          <tr><th colspan="2">Add a new user</th></tr>
+          <tr>
+            <td>User email:</td><td><input type="text" name="account" style="width:98%;" /></td>
+          </tr><tr>
+            <td>Password:</td><td><input type="text" name="password" style="width:98%;" /></td>
+          </tr>
+            <td><input type="hidden" name="create_user" value="1" /></td>
+            <td><button type="submit" value="add-user" name="command" style="width:100%;">Create</button></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <?php
+  }
 }
 
 function admin_remove_user() {

@@ -100,6 +100,39 @@ function get_cmd_dir() {
   return $dir;
 }
 
+function create_user($email, $password) {
+  $file = get_cmd_dir()."/create $email $password";
+  $fh = fopen($file, "w");
+  fclose($fh);
+  while (!exists_user($email)) {
+    sleep(1);
+  }
+}
+
+function exists_user($email) {
+  $file = get_cmd_dir()."/exists $email";
+  $fh = fopen($file, "w");
+  fclose($fh);
+  while (file_exists($file)) {
+    error_log("$file exists");
+    sleep(1);
+  }
+  $file_ok = get_cmd_dir()."/result exists ok";
+  $file_nok = get_cmd_dir()."/result exists nok";
+  error_log("checking $file_ok and $file_nok");
+  while (!file_exists($file_ok) && !file_exists($file_nok)) {
+    sleep(1);
+  }
+  $ok = true;
+  if (file_exists($file_nok)) {
+    $ok = false;
+  }
+  error_log("ok = $ok");
+  unlink($file_ok);
+  unlink($file_nok);
+  return $ok;
+}
+
 function set_sharees($email, $share, $sharees) {
   $current = get_sharees($email, $share);
   foreach ($sharees as $sharee) {
